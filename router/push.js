@@ -10,23 +10,28 @@ webpush.setVapidDetails(
 );
 
 pushRouter.get('/', async function (req, res) {
-    res.send('push ready...');
+  res.send('push ready...');
 })
 
-  pushRouter.get('/publicKey', function (req, res) {
-    res.send(vapidKeys.publicKey)
-  })
-  
-  pushRouter.post('/sendNotification', function (req, res) {
-    const payload = JSON.stringify({message:'Hello, service worker~~~'});
-    setTimeout(function () {
-      webpush
-        .sendNotification(req.body.subscription,payload)
-        .then(function () {
-          res.sendStatus(202);
-        })
-    }, 3000);
-  })
+pushRouter.get('/publicKey', function (req, res) {
+  res.send(vapidKeys.publicKey)
+})
+
+
+
+
+pushRouter.post('/sendNotification', function (req, res) {
+
+  let data = JSON.stringify({msg:'hello pwa'})
+
+  setTimeout(function () {
+    webpush
+      .sendNotification(req.body.subscribe, data)
+      .then(function () {
+        res.sendStatus(202);
+      })
+  }, 3000);
+})
 
 module.exports = pushRouter;
 
